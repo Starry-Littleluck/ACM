@@ -1,1 +1,60 @@
+# 基础算法
+
+> [!NOTE]
+>
+> 代码模板
+>
+> `````cpp
+> #include<bits/stdc++.h>
+> using namespace std;
+> const int N=1e5+10;
+> const int mod=1e9+7;
+> #define VI vector<int>
+> void solve(){
+> 
+> }
+> int main(){
+> 	int t=1;
+> 	//cin>>t;
+> 	while(t--)solve();
+>     return 0;
+> }
+> `````
+>
+> 
+
+# 1.高精度加法
+
+高精度加法是通过一个数组来存储每一位，然后再按正常的加法进行相加，个位加个位，十位加十位，...,有进位加进位。但是对于相加的两个数字，我们不能够直接去按正序存储，我们应该倒序存储，然后实现相加,最后我们还有倒序输出才是正解。
+
+`````cpp
+VI a,b,c;
+void add(string sa,string sb){//sa和sb为相加的两个数字，因int存不下，所有用数组存
+    for(int i=sa.size()-1;i>=0;i--)a.push_back(sa[i]-'0');//将数字倒序存进a中
+    for(int i=sb.size()-1;i>=0;i--)b.push_back(sb[i]-'0');//将数字倒序存进b中
+    int t=0,i=0;
+    for(i=0;i<min(a.size(),b.size());i++){
+        t+=a[i]+b[i];//上一位两数相加的进位加上现在的对应位上的数字
+        c.push_back(t%10);//存入相加的对应位上的余数
+        t/=10;//存上进位
+    }
+    while(i<a.size()){
+        t+=a[i];//上一位两数相加的进位加上现在的对应位上的数字
+        c.push_back(t%10);//存入相加的对应位上的余数
+        t/=10;//存上进位
+        i++;
+    }
+    while(i<b.size()){
+        t+=b[i];//上一位两数相加的进位加上现在的对应位上的数字
+        c.push_back(t%10);//存入相加的对应位上的余数
+        t/=10;//存上进位
+        i++;
+    }
+    if(t)c.push_back(t);
+}
+`````
+
+# 2.高精度减法
+
+这个与高精度加法相似，就是要判断是前者大还是后者大，来考虑是否输出负号和交换顺序
 
